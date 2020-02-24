@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=None">
+  <style type="text/css">
+td.linenos { background-color: #f0f0f0; padding-right: 10px; }
+span.lineno { background-color: #f0f0f0; padding: 0 5px 0 5px; }
+pre { line-height: 125%; }
+body .hll { background-color: #ffffcc }
+body  { background: #f8f8f8; }
+body .c { color: #408080; font-style: italic } /* Comment */
+body .err { border: 1px solid #FF0000 } /* Error */
+body .k { color: #008000; font-weight: bold } /* Keyword */
+body .o { color: #666666 } /* Operator */
+body .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+body .cp { color: #BC7A00 } /* Comment.Preproc */
+body .c1 { color: #408080; font-style: italic } /* Comment.Single */
+body .cs { color: #408080; font-style: italic } /* Comment.Special */
+body .gd { color: #A00000 } /* Generic.Deleted */
+body .ge { font-style: italic } /* Generic.Emph */
+body .gr { color: #FF0000 } /* Generic.Error */
+body .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+body .gi { color: #00A000 } /* Generic.Inserted */
+body .go { color: #888888 } /* Generic.Output */
+body .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+body .gs { font-weight: bold } /* Generic.Strong */
+body .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+body .gt { color: #0044DD } /* Generic.Traceback */
+body .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+body .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+body .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+body .kp { color: #008000 } /* Keyword.Pseudo */
+body .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+body .kt { color: #B00040 } /* Keyword.Type */
+body .m { color: #666666 } /* Literal.Number */
+body .s { color: #BA2121 } /* Literal.String */
+body .na { color: #7D9029 } /* Name.Attribute */
+body .nb { color: #008000 } /* Name.Builtin */
+body .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+body .no { color: #880000 } /* Name.Constant */
+body .nd { color: #AA22FF } /* Name.Decorator */
+body .ni { color: #999999; font-weight: bold } /* Name.Entity */
+body .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+body .nf { color: #0000FF } /* Name.Function */
+body .nl { color: #A0A000 } /* Name.Label */
+body .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+body .nt { color: #008000; font-weight: bold } /* Name.Tag */
+body .nv { color: #19177C } /* Name.Variable */
+body .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+body .w { color: #bbbbbb } /* Text.Whitespace */
+body .mf { color: #666666 } /* Literal.Number.Float */
+body .mh { color: #666666 } /* Literal.Number.Hex */
+body .mi { color: #666666 } /* Literal.Number.Integer */
+body .mo { color: #666666 } /* Literal.Number.Oct */
+body .sb { color: #BA2121 } /* Literal.String.Backtick */
+body .sc { color: #BA2121 } /* Literal.String.Char */
+body .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+body .s2 { color: #BA2121 } /* Literal.String.Double */
+body .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+body .sh { color: #BA2121 } /* Literal.String.Heredoc */
+body .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+body .sx { color: #008000 } /* Literal.String.Other */
+body .sr { color: #BB6688 } /* Literal.String.Regex */
+body .s1 { color: #BA2121 } /* Literal.String.Single */
+body .ss { color: #19177C } /* Literal.String.Symbol */
+body .bp { color: #008000 } /* Name.Builtin.Pseudo */
+body .vc { color: #19177C } /* Name.Variable.Class */
+body .vg { color: #19177C } /* Name.Variable.Global */
+body .vi { color: #19177C } /* Name.Variable.Instance */
+body .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+  </style>
+</head>
+<body>
+<h2></h2>
+
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">pdb</span>
+
+<span style="color: #BA2121; font-style: italic">&quot;&quot;&quot; </span>
+<span style="color: #BA2121; font-style: italic">This code was originally written for CS 231n at Stanford University</span>
+<span style="color: #BA2121; font-style: italic">(cs231n.stanford.edu).  It has been modified in various areas for use in the</span>
+<span style="color: #BA2121; font-style: italic">ECE 239AS class at UCLA.  This includes the descriptions of what code to</span>
+<span style="color: #BA2121; font-style: italic">implement as well as some slight potential changes in variable names to be</span>
+<span style="color: #BA2121; font-style: italic">consistent with class nomenclature.  We thank Justin Johnson &amp; Serena Yeung for</span>
+<span style="color: #BA2121; font-style: italic">permission to use this code.  To see the original version, please visit</span>
+<span style="color: #BA2121; font-style: italic">cs231n.stanford.edu.  </span>
+<span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">affine_forward</span>(x, w, b):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Computes the forward pass for an affine (fully-connected) layer.</span>
+
+<span style="color: #BA2121; font-style: italic">    The input x has shape (N, d_1, ..., d_k) and contains a minibatch of N</span>
+<span style="color: #BA2121; font-style: italic">    examples, where each example x[i] has shape (d_1, ..., d_k). We will</span>
+<span style="color: #BA2121; font-style: italic">    reshape each input into a vector of dimension D = d_1 * ... * d_k, and</span>
+<span style="color: #BA2121; font-style: italic">    then transform it to an output vector of dimension M.</span>
+
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - x: A numpy array containing input data, of shape (N, d_1, ..., d_k)</span>
+<span style="color: #BA2121; font-style: italic">    - w: A numpy array of weights, of shape (D, M)</span>
+<span style="color: #BA2121; font-style: italic">    - b: A numpy array of biases, of shape (M,)</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    Returns a tuple of:</span>
+<span style="color: #BA2121; font-style: italic">    - out: output, of shape (N, M)</span>
+<span style="color: #BA2121; font-style: italic">    - cache: (x, w, b)</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    out <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Calculate the output of the forward pass.  Notice the dimensions</span>
+    <span style="color: #408080; font-style: italic">#   of w are D x M, which is the transpose of what we did in earlier </span>
+    <span style="color: #408080; font-style: italic">#   assignments.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    
+    x_reshape <span style="color: #666666">=</span> x<span style="color: #666666">.</span>reshape(x<span style="color: #666666">.</span>shape[<span style="color: #666666">0</span>], <span style="color: #666666">-1</span>)
+    out <span style="color: #666666">=</span> np<span style="color: #666666">.</span>dot(x_reshape, w) <span style="color: #666666">+</span> b
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+      
+    cache <span style="color: #666666">=</span> (x, w, b)
+    <span style="color: #008000; font-weight: bold">return</span> out, cache
+
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">affine_backward</span>(dout, cache):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Computes the backward pass for an affine layer.</span>
+
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - dout: Upstream derivative, of shape (N, M)</span>
+<span style="color: #BA2121; font-style: italic">    - cache: Tuple of:</span>
+<span style="color: #BA2121; font-style: italic">      - x: A numpy array containing input data, of shape (N, d_1, ..., d_k)</span>
+<span style="color: #BA2121; font-style: italic">      - w: A numpy array of weights, of shape (D, M)</span>
+<span style="color: #BA2121; font-style: italic">      - b: A numpy array of biases, of shape (M,)</span>
+
+<span style="color: #BA2121; font-style: italic">    Returns a tuple of:</span>
+<span style="color: #BA2121; font-style: italic">    - dx: Gradient with respect to x, of shape (N, d1, ..., d_k)</span>
+<span style="color: #BA2121; font-style: italic">    - dw: Gradient with respect to w, of shape (D, M)</span>
+<span style="color: #BA2121; font-style: italic">    - db: Gradient with respect to b, of shape (M,)</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    x, w, b <span style="color: #666666">=</span> cache
+    dx, dw, db <span style="color: #666666">=</span> <span style="color: #008000">None</span>, <span style="color: #008000">None</span>, <span style="color: #008000">None</span>
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Calculate the gradients for the backward pass.</span>
+    <span style="color: #408080; font-style: italic"># Notice:  </span>
+    <span style="color: #408080; font-style: italic">#   dout is N x M</span>
+    <span style="color: #408080; font-style: italic">#   dx should be N x d1 x ... x dk; it relates to dout through multiplication with w, which is D x M</span>
+    <span style="color: #408080; font-style: italic">#   dw should be D x M; it relates to dout through multiplication with x, which is N x D after reshaping</span>
+    <span style="color: #408080; font-style: italic">#   db should be M; it is just the sum over dout examples</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    x_reshape <span style="color: #666666">=</span> x<span style="color: #666666">.</span>reshape(x<span style="color: #666666">.</span>shape[<span style="color: #666666">0</span>], <span style="color: #666666">-1</span>)
+    db <span style="color: #666666">=</span> np<span style="color: #666666">.</span>sum(dout, axis<span style="color: #666666">=0</span>)
+    dw <span style="color: #666666">=</span> np<span style="color: #666666">.</span>dot(x_reshape<span style="color: #666666">.</span>T, dout)
+    dx <span style="color: #666666">=</span> np<span style="color: #666666">.</span>dot(dout, w<span style="color: #666666">.</span>T)<span style="color: #666666">.</span>reshape(x<span style="color: #666666">.</span>shape)
+
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    
+    <span style="color: #008000; font-weight: bold">return</span> dx, dw, db
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">relu_forward</span>(x):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Computes the forward pass for a layer of rectified linear units (ReLUs).</span>
+
+<span style="color: #BA2121; font-style: italic">    Input:</span>
+<span style="color: #BA2121; font-style: italic">    - x: Inputs, of any shape</span>
+
+<span style="color: #BA2121; font-style: italic">    Returns a tuple of:</span>
+<span style="color: #BA2121; font-style: italic">    - out: Output, of the same shape as x</span>
+<span style="color: #BA2121; font-style: italic">    - cache: x</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Implement the ReLU forward pass.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    relu <span style="color: #666666">=</span> <span style="color: #008000; font-weight: bold">lambda</span> x: x <span style="color: #666666">*</span> (x <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>)
+    out <span style="color: #666666">=</span> relu(x)
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    
+    cache <span style="color: #666666">=</span> x
+    <span style="color: #008000; font-weight: bold">return</span> out, cache
+
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">relu_backward</span>(dout, cache):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Computes the backward pass for a layer of rectified linear units (ReLUs).</span>
+
+<span style="color: #BA2121; font-style: italic">    Input:</span>
+<span style="color: #BA2121; font-style: italic">    - dout: Upstream derivatives, of any shape</span>
+<span style="color: #BA2121; font-style: italic">    - cache: Input x, of same shape as dout</span>
+
+<span style="color: #BA2121; font-style: italic">    Returns:</span>
+<span style="color: #BA2121; font-style: italic">    - dx: Gradient with respect to x</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    x <span style="color: #666666">=</span> cache
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Implement the ReLU backward pass</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    
+    dx <span style="color: #666666">=</span> dout <span style="color: #666666">*</span> (x <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>)
+    
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    
+    <span style="color: #008000; font-weight: bold">return</span> dx
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">batchnorm_forward</span>(x, gamma, beta, bn_param):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Forward pass for batch normalization.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    During training the sample mean and (uncorrected) sample variance are</span>
+<span style="color: #BA2121; font-style: italic">    computed from minibatch statistics and used to normalize the incoming data.</span>
+<span style="color: #BA2121; font-style: italic">    During training we also keep an exponentially decaying running mean of the mean</span>
+<span style="color: #BA2121; font-style: italic">    and variance of each feature, and these averages are used to normalize data</span>
+<span style="color: #BA2121; font-style: italic">    at test-time.</span>
+
+<span style="color: #BA2121; font-style: italic">    At each timestep we update the running averages for mean and variance using</span>
+<span style="color: #BA2121; font-style: italic">    an exponential decay based on the momentum parameter:</span>
+
+<span style="color: #BA2121; font-style: italic">    running_mean = momentum * running_mean + (1 - momentum) * sample_mean</span>
+<span style="color: #BA2121; font-style: italic">    running_var = momentum * running_var + (1 - momentum) * sample_var</span>
+
+<span style="color: #BA2121; font-style: italic">    Note that the batch normalization paper suggests a different test-time</span>
+<span style="color: #BA2121; font-style: italic">    behavior: they compute sample mean and variance for each feature using a</span>
+<span style="color: #BA2121; font-style: italic">    large number of training images rather than using a running average. For</span>
+<span style="color: #BA2121; font-style: italic">    this implementation we have chosen to use running averages instead since</span>
+<span style="color: #BA2121; font-style: italic">    they do not require an additional estimation step; the torch7 implementation</span>
+<span style="color: #BA2121; font-style: italic">    of batch normalization also uses running averages.</span>
+
+<span style="color: #BA2121; font-style: italic">    Input:</span>
+<span style="color: #BA2121; font-style: italic">    - x: Data of shape (N, D)</span>
+<span style="color: #BA2121; font-style: italic">    - gamma: Scale parameter of shape (D,)</span>
+<span style="color: #BA2121; font-style: italic">    - beta: Shift paremeter of shape (D,)</span>
+<span style="color: #BA2121; font-style: italic">    - bn_param: Dictionary with the following keys:</span>
+<span style="color: #BA2121; font-style: italic">      - mode: &#39;train&#39; or &#39;test&#39;; required</span>
+<span style="color: #BA2121; font-style: italic">      - eps: Constant for numeric stability</span>
+<span style="color: #BA2121; font-style: italic">      - momentum: Constant for running mean / variance.</span>
+<span style="color: #BA2121; font-style: italic">      - running_mean: Array of shape (D,) giving running mean of features</span>
+<span style="color: #BA2121; font-style: italic">      - running_var Array of shape (D,) giving running variance of features</span>
+
+<span style="color: #BA2121; font-style: italic">    Returns a tuple of:</span>
+<span style="color: #BA2121; font-style: italic">    - out: of shape (N, D)</span>
+<span style="color: #BA2121; font-style: italic">    - cache: A tuple of values needed in the backward pass</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    mode <span style="color: #666666">=</span> bn_param[<span style="color: #BA2121">&#39;mode&#39;</span>]
+    eps <span style="color: #666666">=</span> bn_param<span style="color: #666666">.</span>get(<span style="color: #BA2121">&#39;eps&#39;</span>, <span style="color: #666666">1e-5</span>)
+    momentum <span style="color: #666666">=</span> bn_param<span style="color: #666666">.</span>get(<span style="color: #BA2121">&#39;momentum&#39;</span>, <span style="color: #666666">0.9</span>)
+
+    N, D <span style="color: #666666">=</span> x<span style="color: #666666">.</span>shape
+    running_mean <span style="color: #666666">=</span> bn_param<span style="color: #666666">.</span>get(<span style="color: #BA2121">&#39;running_mean&#39;</span>, np<span style="color: #666666">.</span>zeros(D, dtype<span style="color: #666666">=</span>x<span style="color: #666666">.</span>dtype))
+    running_var <span style="color: #666666">=</span> bn_param<span style="color: #666666">.</span>get(<span style="color: #BA2121">&#39;running_var&#39;</span>, np<span style="color: #666666">.</span>zeros(D, dtype<span style="color: #666666">=</span>x<span style="color: #666666">.</span>dtype))
+
+    out, cache <span style="color: #666666">=</span> <span style="color: #008000">None</span>, <span style="color: #008000">None</span>
+    <span style="color: #008000; font-weight: bold">if</span> mode <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;train&#39;</span>:
+        
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+        <span style="color: #408080; font-style: italic">#   A few steps here:</span>
+        <span style="color: #408080; font-style: italic">#     (1) Calculate the running mean and variance of the minibatch.</span>
+        <span style="color: #408080; font-style: italic">#     (2) Normalize the activations with the running mean and variance.</span>
+        <span style="color: #408080; font-style: italic">#     (3) Scale and shift the normalized activations.  Store this</span>
+        <span style="color: #408080; font-style: italic">#         as the variable &#39;out&#39;</span>
+        <span style="color: #408080; font-style: italic">#     (4) Store any variables you may need for the backward pass in</span>
+        <span style="color: #408080; font-style: italic">#         the &#39;cache&#39; variable.</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        mean_sample <span style="color: #666666">=</span> np<span style="color: #666666">.</span>mean(x, axis<span style="color: #666666">=0</span>)
+        var_sample <span style="color: #666666">=</span> np<span style="color: #666666">.</span>var(x, axis<span style="color: #666666">=0</span>)
+
+        running_mean <span style="color: #666666">=</span> momentum <span style="color: #666666">*</span> running_mean <span style="color: #666666">+</span> (<span style="color: #666666">1</span> <span style="color: #666666">-</span> momentum) <span style="color: #666666">*</span> mean_sample
+        running_var <span style="color: #666666">=</span> momentum <span style="color: #666666">*</span> running_var <span style="color: #666666">+</span> (<span style="color: #666666">1</span> <span style="color: #666666">-</span> momentum) <span style="color: #666666">*</span> var_sample
+
+        xhat <span style="color: #666666">=</span> (x <span style="color: #666666">-</span> mean_sample) <span style="color: #666666">/</span> np<span style="color: #666666">.</span>sqrt(var_sample <span style="color: #666666">+</span> eps)
+        out <span style="color: #666666">=</span> gamma <span style="color: #666666">*</span> xhat <span style="color: #666666">+</span> beta
+
+        cache <span style="color: #666666">=</span> (x, xhat, mean_sample, var_sample, gamma, beta, eps)
+        
+
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #008000; font-weight: bold">elif</span> mode <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;test&#39;</span>:
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+        <span style="color: #408080; font-style: italic">#   Calculate the testing time normalized activation.  Normalize using</span>
+        <span style="color: #408080; font-style: italic">#   the running mean and variance, and then scale and shift appropriately.</span>
+        <span style="color: #408080; font-style: italic">#   Store the output as &#39;out&#39;.</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        
+        outhat <span style="color: #666666">=</span> (x <span style="color: #666666">-</span> running_mean) <span style="color: #666666">/</span> np<span style="color: #666666">.</span>sqrt(running_var <span style="color: #666666">+</span> eps)
+        out <span style="color: #666666">=</span> outhat <span style="color: #666666">*</span> gamma <span style="color: #666666">+</span> beta
+        
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #008000; font-weight: bold">else</span>:
+        <span style="color: #008000; font-weight: bold">raise</span> <span style="color: #D2413A; font-weight: bold">ValueError</span>(<span style="color: #BA2121">&#39;Invalid forward batchnorm mode &quot;</span><span style="color: #BB6688; font-weight: bold">%s</span><span style="color: #BA2121">&quot;&#39;</span> <span style="color: #666666">%</span> mode)
+
+    <span style="color: #408080; font-style: italic"># Store the updated running means back into bn_param</span>
+    bn_param[<span style="color: #BA2121">&#39;running_mean&#39;</span>] <span style="color: #666666">=</span> running_mean
+    bn_param[<span style="color: #BA2121">&#39;running_var&#39;</span>] <span style="color: #666666">=</span> running_var
+
+    <span style="color: #008000; font-weight: bold">return</span> out, cache
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">batchnorm_backward</span>(dout, cache):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Backward pass for batch normalization.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    For this implementation, you should write out a computation graph for</span>
+<span style="color: #BA2121; font-style: italic">    batch normalization on paper and propagate gradients backward through</span>
+<span style="color: #BA2121; font-style: italic">    intermediate nodes.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - dout: Upstream derivatives, of shape (N, D)</span>
+<span style="color: #BA2121; font-style: italic">    - cache: Variable of intermediates from batchnorm_forward.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    Returns a tuple of:</span>
+<span style="color: #BA2121; font-style: italic">    - dx: Gradient with respect to inputs x, of shape (N, D)</span>
+<span style="color: #BA2121; font-style: italic">    - dgamma: Gradient with respect to scale parameter gamma, of shape (D,)</span>
+<span style="color: #BA2121; font-style: italic">    - dbeta: Gradient with respect to shift parameter beta, of shape (D,)</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    dx, dgamma, dbeta <span style="color: #666666">=</span> <span style="color: #008000">None</span>, <span style="color: #008000">None</span>, <span style="color: #008000">None</span>
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Implement the batchnorm backward pass, calculating dx, dgamma, and dbeta.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    N, D <span style="color: #666666">=</span> dout<span style="color: #666666">.</span>shape
+    x, xhat, sample_mean, var_sample, gamma, _, eps <span style="color: #666666">=</span> cache
+    dgamma <span style="color: #666666">=</span> np<span style="color: #666666">.</span>sum(dout <span style="color: #666666">*</span> xhat, axis<span style="color: #666666">=0</span>)
+    dbeta <span style="color: #666666">=</span> np<span style="color: #666666">.</span>sum(dout, axis<span style="color: #666666">=0</span>)
+    dxhat <span style="color: #666666">=</span> gamma <span style="color: #666666">*</span> dout
+
+
+    var_sample_eps <span style="color: #666666">=</span> <span style="color: #666666">1/</span>np<span style="color: #666666">.</span>sqrt(var_sample <span style="color: #666666">+</span> eps)
+    dx <span style="color: #666666">=</span> var_sample_eps <span style="color: #666666">*</span> (<span style="color: #666666">1/</span>N) <span style="color: #666666">*</span> gamma <span style="color: #666666">*</span> (dout <span style="color: #666666">*</span> N <span style="color: #666666">-</span> dbeta <span style="color: #666666">-</span> (xhat <span style="color: #666666">*</span> dgamma))
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    
+    <span style="color: #008000; font-weight: bold">return</span> dx, dgamma, dbeta
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">dropout_forward</span>(x, dropout_param):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Performs the forward pass for (inverted) dropout.</span>
+
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - x: Input data, of any shape</span>
+<span style="color: #BA2121; font-style: italic">    - dropout_param: A dictionary with the following keys:</span>
+<span style="color: #BA2121; font-style: italic">      - p: Dropout parameter. We keep each neuron output with probability p.</span>
+<span style="color: #BA2121; font-style: italic">      - mode: &#39;test&#39; or &#39;train&#39;. If the mode is train, then perform dropout;</span>
+<span style="color: #BA2121; font-style: italic">        if the mode is test, then just return the input.</span>
+<span style="color: #BA2121; font-style: italic">      - seed: Seed for the random number generator. Passing seed makes this</span>
+<span style="color: #BA2121; font-style: italic">        function deterministic, which is needed for gradient checking but not in</span>
+<span style="color: #BA2121; font-style: italic">        real networks.</span>
+
+<span style="color: #BA2121; font-style: italic">    Outputs:</span>
+<span style="color: #BA2121; font-style: italic">    - out: Array of the same shape as x.</span>
+<span style="color: #BA2121; font-style: italic">    - cache: A tuple (dropout_param, mask). In training mode, mask is the dropout</span>
+<span style="color: #BA2121; font-style: italic">      mask that was used to multiply the input; in test mode, mask is None.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    p, mode <span style="color: #666666">=</span> dropout_param[<span style="color: #BA2121">&#39;p&#39;</span>], dropout_param[<span style="color: #BA2121">&#39;mode&#39;</span>]
+    <span style="color: #008000; font-weight: bold">if</span> <span style="color: #BA2121">&#39;seed&#39;</span> <span style="color: #AA22FF; font-weight: bold">in</span> dropout_param:
+        np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>seed(dropout_param[<span style="color: #BA2121">&#39;seed&#39;</span>])
+
+    mask <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    out <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+
+    <span style="color: #008000; font-weight: bold">if</span> mode <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;train&#39;</span>:
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+        <span style="color: #408080; font-style: italic">#   Implement the inverted dropout forward pass during training time.  </span>
+        <span style="color: #408080; font-style: italic">#   Store the masked and scaled activations in out, and store the </span>
+        <span style="color: #408080; font-style: italic">#   dropout mask as the variable mask.</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        
+        mask <span style="color: #666666">=</span> np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>uniform(low<span style="color: #666666">=0</span>, high<span style="color: #666666">=1</span>, size <span style="color: #666666">=</span> x<span style="color: #666666">.</span>shape) <span style="color: #666666">&gt;</span> p
+        out <span style="color: #666666">=</span> x <span style="color: #666666">*</span> mask
+        
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    
+    <span style="color: #008000; font-weight: bold">elif</span> mode <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;test&#39;</span>:
+        
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+        <span style="color: #408080; font-style: italic">#   Implement the inverted dropout forward pass during test time.</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        
+        
+        out <span style="color: #666666">=</span> x
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    cache <span style="color: #666666">=</span> (dropout_param, mask)
+    out <span style="color: #666666">=</span> out<span style="color: #666666">.</span>astype(x<span style="color: #666666">.</span>dtype, copy<span style="color: #666666">=</span><span style="color: #008000">False</span>)
+
+    <span style="color: #008000; font-weight: bold">return</span> out, cache
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">dropout_backward</span>(dout, cache):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Perform the backward pass for (inverted) dropout.</span>
+
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - dout: Upstream derivatives, of any shape</span>
+<span style="color: #BA2121; font-style: italic">    - cache: (dropout_param, mask) from dropout_forward.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    dropout_param, mask <span style="color: #666666">=</span> cache
+    mode <span style="color: #666666">=</span> dropout_param[<span style="color: #BA2121">&#39;mode&#39;</span>]
+    
+    dx <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    <span style="color: #008000; font-weight: bold">if</span> mode <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;train&#39;</span>:
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+        <span style="color: #408080; font-style: italic">#   Implement the inverted dropout backward pass during training time.</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        
+        
+        dx <span style="color: #666666">=</span> dout <span style="color: #666666">*</span> mask
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #008000; font-weight: bold">elif</span> mode <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;test&#39;</span>:
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+        <span style="color: #408080; font-style: italic">#   Implement the inverted dropout backward pass during test time.</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        
+        
+        dx <span style="color: #666666">=</span> dout
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #008000; font-weight: bold">return</span> dx
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">svm_loss</span>(x, y):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Computes the loss and gradient using for multiclass SVM classification.</span>
+
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - x: Input data, of shape (N, C) where x[i, j] is the score for the jth class</span>
+<span style="color: #BA2121; font-style: italic">      for the ith input.</span>
+<span style="color: #BA2121; font-style: italic">    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and</span>
+<span style="color: #BA2121; font-style: italic">      0 &lt;= y[i] &lt; C</span>
+
+<span style="color: #BA2121; font-style: italic">    Returns a tuple of:</span>
+<span style="color: #BA2121; font-style: italic">    - loss: Scalar giving the loss</span>
+<span style="color: #BA2121; font-style: italic">    - dx: Gradient of the loss with respect to x</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    N <span style="color: #666666">=</span> x<span style="color: #666666">.</span>shape[<span style="color: #666666">0</span>]
+    correct_class_scores <span style="color: #666666">=</span> x[np<span style="color: #666666">.</span>arange(N), y]
+    margins <span style="color: #666666">=</span> np<span style="color: #666666">.</span>maximum(<span style="color: #666666">0</span>, x <span style="color: #666666">-</span> correct_class_scores[:, np<span style="color: #666666">.</span>newaxis] <span style="color: #666666">+</span> <span style="color: #666666">1.0</span>)
+    margins[np<span style="color: #666666">.</span>arange(N), y] <span style="color: #666666">=</span> <span style="color: #666666">0</span>
+    loss <span style="color: #666666">=</span> np<span style="color: #666666">.</span>sum(margins) <span style="color: #666666">/</span> N
+    num_pos <span style="color: #666666">=</span> np<span style="color: #666666">.</span>sum(margins <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>, axis<span style="color: #666666">=1</span>)
+    dx <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros_like(x)
+    dx[margins <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>] <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+    dx[np<span style="color: #666666">.</span>arange(N), y] <span style="color: #666666">-=</span> num_pos
+    dx <span style="color: #666666">/=</span> N
+    <span style="color: #008000; font-weight: bold">return</span> loss, dx
+
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">softmax_loss</span>(x, y):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Computes the loss and gradient for softmax classification.</span>
+
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - x: Input data, of shape (N, C) where x[i, j] is the score for the jth class</span>
+<span style="color: #BA2121; font-style: italic">      for the ith input.</span>
+<span style="color: #BA2121; font-style: italic">    - y: Vector of labels, of shape (N,) where y[i] is the label for x[i] and</span>
+<span style="color: #BA2121; font-style: italic">      0 &lt;= y[i] &lt; C</span>
+
+<span style="color: #BA2121; font-style: italic">    Returns a tuple of:</span>
+<span style="color: #BA2121; font-style: italic">    - loss: Scalar giving the loss</span>
+<span style="color: #BA2121; font-style: italic">    - dx: Gradient of the loss with respect to x</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+
+    probs <span style="color: #666666">=</span> np<span style="color: #666666">.</span>exp(x <span style="color: #666666">-</span> np<span style="color: #666666">.</span>max(x, axis<span style="color: #666666">=1</span>, keepdims<span style="color: #666666">=</span><span style="color: #008000">True</span>))
+    probs <span style="color: #666666">/=</span> np<span style="color: #666666">.</span>sum(probs, axis<span style="color: #666666">=1</span>, keepdims<span style="color: #666666">=</span><span style="color: #008000">True</span>)
+    N <span style="color: #666666">=</span> x<span style="color: #666666">.</span>shape[<span style="color: #666666">0</span>]
+    loss <span style="color: #666666">=</span> <span style="color: #666666">-</span>np<span style="color: #666666">.</span>sum(np<span style="color: #666666">.</span>log(probs[np<span style="color: #666666">.</span>arange(N), y])) <span style="color: #666666">/</span> N
+    dx <span style="color: #666666">=</span> probs<span style="color: #666666">.</span>copy()
+    dx[np<span style="color: #666666">.</span>arange(N), y] <span style="color: #666666">-=</span> <span style="color: #666666">1</span>
+    dx <span style="color: #666666">/=</span> N
+    <span style="color: #008000; font-weight: bold">return</span> loss, dx
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">affine_batchnorm_relu_forward</span>(x, w, b, gamma, beta, bn_param):
+  <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">  Convenience layer that performs an affine transform, batch normalization,</span>
+<span style="color: #BA2121; font-style: italic">  and ReLU.</span>
+<span style="color: #BA2121; font-style: italic">  Inputs:</span>
+<span style="color: #BA2121; font-style: italic">  - x: Array of shape (N, D1); input to the affine layer</span>
+<span style="color: #BA2121; font-style: italic">  - w, b: Arrays of shape (D2, D2) and (D2,) giving the weight and bias for</span>
+<span style="color: #BA2121; font-style: italic">    the affine transform.</span>
+<span style="color: #BA2121; font-style: italic">  - gamma, beta: Arrays of shape (D2,) and (D2,) giving scale and shift</span>
+<span style="color: #BA2121; font-style: italic">    parameters for batch normalization.</span>
+<span style="color: #BA2121; font-style: italic">  - bn_param: Dictionary of parameters for batch normalization.</span>
+<span style="color: #BA2121; font-style: italic">  Returns:</span>
+<span style="color: #BA2121; font-style: italic">  - out: Output from ReLU, of shape (N, D2)</span>
+<span style="color: #BA2121; font-style: italic">  - cache: Object to give to the backward pass.</span>
+<span style="color: #BA2121; font-style: italic">  &quot;&quot;&quot;</span>
+  a, fc_cache <span style="color: #666666">=</span> affine_forward(x, w, b)
+  a_bn, bn_cache <span style="color: #666666">=</span> batchnorm_forward(a, gamma, beta, bn_param)
+  out, relu_cache <span style="color: #666666">=</span> relu_forward(a_bn)
+  cache <span style="color: #666666">=</span> (fc_cache, bn_cache, relu_cache)
+  <span style="color: #008000; font-weight: bold">return</span> out, cache
+
+<span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">affine_batchnorm_relu_backward</span>(dout, cache):
+  <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">  Backward pass for the affine-batchnorm-relu convenience layer.</span>
+<span style="color: #BA2121; font-style: italic">  &quot;&quot;&quot;</span>
+  fc_cache, bn_cache, relu_cache <span style="color: #666666">=</span> cache
+  da_bn <span style="color: #666666">=</span> relu_backward(dout, relu_cache)
+  da, dgamma, dbeta <span style="color: #666666">=</span> batchnorm_backward(da_bn, bn_cache)
+  dx, dw, db <span style="color: #666666">=</span> affine_backward(da, fc_cache)
+  <span style="color: #008000; font-weight: bold">return</span> dx, dw, db, dgamma, dbeta  
+</pre></div>
+</body>
+</html>

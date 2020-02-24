@@ -1,0 +1,449 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=None">
+  <style type="text/css">
+td.linenos { background-color: #f0f0f0; padding-right: 10px; }
+span.lineno { background-color: #f0f0f0; padding: 0 5px 0 5px; }
+pre { line-height: 125%; }
+body .hll { background-color: #ffffcc }
+body  { background: #f8f8f8; }
+body .c { color: #408080; font-style: italic } /* Comment */
+body .err { border: 1px solid #FF0000 } /* Error */
+body .k { color: #008000; font-weight: bold } /* Keyword */
+body .o { color: #666666 } /* Operator */
+body .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+body .cp { color: #BC7A00 } /* Comment.Preproc */
+body .c1 { color: #408080; font-style: italic } /* Comment.Single */
+body .cs { color: #408080; font-style: italic } /* Comment.Special */
+body .gd { color: #A00000 } /* Generic.Deleted */
+body .ge { font-style: italic } /* Generic.Emph */
+body .gr { color: #FF0000 } /* Generic.Error */
+body .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+body .gi { color: #00A000 } /* Generic.Inserted */
+body .go { color: #888888 } /* Generic.Output */
+body .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+body .gs { font-weight: bold } /* Generic.Strong */
+body .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+body .gt { color: #0044DD } /* Generic.Traceback */
+body .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+body .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+body .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+body .kp { color: #008000 } /* Keyword.Pseudo */
+body .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+body .kt { color: #B00040 } /* Keyword.Type */
+body .m { color: #666666 } /* Literal.Number */
+body .s { color: #BA2121 } /* Literal.String */
+body .na { color: #7D9029 } /* Name.Attribute */
+body .nb { color: #008000 } /* Name.Builtin */
+body .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+body .no { color: #880000 } /* Name.Constant */
+body .nd { color: #AA22FF } /* Name.Decorator */
+body .ni { color: #999999; font-weight: bold } /* Name.Entity */
+body .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+body .nf { color: #0000FF } /* Name.Function */
+body .nl { color: #A0A000 } /* Name.Label */
+body .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+body .nt { color: #008000; font-weight: bold } /* Name.Tag */
+body .nv { color: #19177C } /* Name.Variable */
+body .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+body .w { color: #bbbbbb } /* Text.Whitespace */
+body .mf { color: #666666 } /* Literal.Number.Float */
+body .mh { color: #666666 } /* Literal.Number.Hex */
+body .mi { color: #666666 } /* Literal.Number.Integer */
+body .mo { color: #666666 } /* Literal.Number.Oct */
+body .sb { color: #BA2121 } /* Literal.String.Backtick */
+body .sc { color: #BA2121 } /* Literal.String.Char */
+body .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+body .s2 { color: #BA2121 } /* Literal.String.Double */
+body .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+body .sh { color: #BA2121 } /* Literal.String.Heredoc */
+body .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+body .sx { color: #008000 } /* Literal.String.Other */
+body .sr { color: #BB6688 } /* Literal.String.Regex */
+body .s1 { color: #BA2121 } /* Literal.String.Single */
+body .ss { color: #19177C } /* Literal.String.Symbol */
+body .bp { color: #008000 } /* Name.Builtin.Pseudo */
+body .vc { color: #19177C } /* Name.Variable.Class */
+body .vg { color: #19177C } /* Name.Variable.Global */
+body .vi { color: #19177C } /* Name.Variable.Instance */
+body .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+  </style>
+</head>
+<body>
+<h2></h2>
+
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">pdb</span>
+
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">.layers</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #666666">*</span>
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">.layer_utils</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #666666">*</span>
+
+<span style="color: #BA2121; font-style: italic">&quot;&quot;&quot; </span>
+<span style="color: #BA2121; font-style: italic">This code was originally written for CS 231n at Stanford University</span>
+<span style="color: #BA2121; font-style: italic">(cs231n.stanford.edu).  It has been modified in various areas for use in the</span>
+<span style="color: #BA2121; font-style: italic">ECE 239AS class at UCLA.  This includes the descriptions of what code to</span>
+<span style="color: #BA2121; font-style: italic">implement as well as some slight potential changes in variable names to be</span>
+<span style="color: #BA2121; font-style: italic">consistent with class nomenclature.  We thank Justin Johnson &amp; Serena Yeung for</span>
+<span style="color: #BA2121; font-style: italic">permission to use this code.  To see the original version, please visit</span>
+<span style="color: #BA2121; font-style: italic">cs231n.stanford.edu.  </span>
+<span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">TwoLayerNet</span>(<span style="color: #008000">object</span>):
+  <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">  A two-layer fully-connected neural network with ReLU nonlinearity and</span>
+<span style="color: #BA2121; font-style: italic">  softmax loss that uses a modular layer design. We assume an input dimension</span>
+<span style="color: #BA2121; font-style: italic">  of D, a hidden dimension of H, and perform classification over C classes.</span>
+<span style="color: #BA2121; font-style: italic">  </span>
+<span style="color: #BA2121; font-style: italic">  The architecure should be affine - relu - affine - softmax.</span>
+
+<span style="color: #BA2121; font-style: italic">  Note that this class does not implement gradient descent; instead, it</span>
+<span style="color: #BA2121; font-style: italic">  will interact with a separate Solver object that is responsible for running</span>
+<span style="color: #BA2121; font-style: italic">  optimization.</span>
+
+<span style="color: #BA2121; font-style: italic">  The learnable parameters of the model are stored in the dictionary</span>
+<span style="color: #BA2121; font-style: italic">  self.params that maps parameter names to numpy arrays.</span>
+<span style="color: #BA2121; font-style: italic">  &quot;&quot;&quot;</span>
+  
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, input_dim<span style="color: #666666">=3*32*32</span>, hidden_dims<span style="color: #666666">=100</span>, num_classes<span style="color: #666666">=10</span>,
+               dropout<span style="color: #666666">=0</span>, weight_scale<span style="color: #666666">=1e-3</span>, reg<span style="color: #666666">=0.0</span>):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Initialize a new network.</span>
+
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - input_dim: An integer giving the size of the input</span>
+<span style="color: #BA2121; font-style: italic">    - hidden_dims: An integer giving the size of the hidden layer</span>
+<span style="color: #BA2121; font-style: italic">    - num_classes: An integer giving the number of classes to classify</span>
+<span style="color: #BA2121; font-style: italic">    - dropout: Scalar between 0 and 1 giving dropout strength.</span>
+<span style="color: #BA2121; font-style: italic">    - weight_scale: Scalar giving the standard deviation for random</span>
+<span style="color: #BA2121; font-style: italic">      initialization of the weights.</span>
+<span style="color: #BA2121; font-style: italic">    - reg: Scalar giving L2 regularization strength.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params <span style="color: #666666">=</span> {}
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>reg <span style="color: #666666">=</span> reg
+    
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Initialize W1, W2, b1, and b2.  Store these as self.params[&#39;W1&#39;], </span>
+    <span style="color: #408080; font-style: italic">#   self.params[&#39;W2&#39;], self.params[&#39;b1&#39;] and self.params[&#39;b2&#39;]. The</span>
+    <span style="color: #408080; font-style: italic">#   biases are initialized to zero and the weights are initialized</span>
+    <span style="color: #408080; font-style: italic">#   so that each parameter has mean 0 and standard deviation weight_scale.</span>
+    <span style="color: #408080; font-style: italic">#   The dimensions of W1 should be (input_dim, hidden_dim) and the</span>
+    <span style="color: #408080; font-style: italic">#   dimensions of W2 should be (hidden_dims, num_classes)</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W2&#39;</span>] <span style="color: #666666">=</span> weight_scale <span style="color: #666666">*</span> np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>randn(hidden_dims, num_classes)
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b2&#39;</span>] <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros(num_classes)
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W1&#39;</span>] <span style="color: #666666">=</span> weight_scale <span style="color: #666666">*</span> np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>randn(input_dim, hidden_dims)
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b1&#39;</span>] <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros(hidden_dims)
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">loss</span>(<span style="color: #008000">self</span>, X, y<span style="color: #666666">=</span><span style="color: #008000">None</span>):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Compute loss and gradient for a minibatch of data.</span>
+
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - X: Array of input data of shape (N, d_1, ..., d_k)</span>
+<span style="color: #BA2121; font-style: italic">    - y: Array of labels, of shape (N,). y[i] gives the label for X[i].</span>
+
+<span style="color: #BA2121; font-style: italic">    Returns:</span>
+<span style="color: #BA2121; font-style: italic">    If y is None, then run a test-time forward pass of the model and return:</span>
+<span style="color: #BA2121; font-style: italic">    - scores: Array of shape (N, C) giving classification scores, where</span>
+<span style="color: #BA2121; font-style: italic">      scores[i, c] is the classification score for X[i] and class c.</span>
+
+<span style="color: #BA2121; font-style: italic">    If y is not None, then run a training-time forward and backward pass and</span>
+<span style="color: #BA2121; font-style: italic">    return a tuple of:</span>
+<span style="color: #BA2121; font-style: italic">    - loss: Scalar value giving the loss</span>
+<span style="color: #BA2121; font-style: italic">    - grads: Dictionary with the same keys as self.params, mapping parameter</span>
+<span style="color: #BA2121; font-style: italic">      names to gradients of the loss with respect to those parameters.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>  
+    scores <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Implement the forward pass of the two-layer neural network. Store</span>
+    <span style="color: #408080; font-style: italic">#   the class scores as the variable &#39;scores&#39;.  Be sure to use the layers</span>
+    <span style="color: #408080; font-style: italic">#   you prior implemented.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #    </span>
+    
+    h1, cache1 <span style="color: #666666">=</span> affine_relu_forward(X, <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W1&#39;</span>], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b1&#39;</span>])
+    scores, cache2 <span style="color: #666666">=</span> affine_forward(h1, <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W2&#39;</span>], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b2&#39;</span>])
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    
+    <span style="color: #408080; font-style: italic"># If y is None then we are in test mode so just return scores</span>
+    <span style="color: #008000; font-weight: bold">if</span> y <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #008000">None</span>:
+      <span style="color: #008000; font-weight: bold">return</span> scores
+    
+    loss, grads <span style="color: #666666">=</span> <span style="color: #666666">0</span>, {}
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Implement the backward pass of the two-layer neural net.  Store</span>
+    <span style="color: #408080; font-style: italic">#   the loss as the variable &#39;loss&#39; and store the gradients in the </span>
+    <span style="color: #408080; font-style: italic">#   &#39;grads&#39; dictionary.  For the grads dictionary, grads[&#39;W1&#39;] holds</span>
+    <span style="color: #408080; font-style: italic">#   the gradient for W1, grads[&#39;b1&#39;] holds the gradient for b1, etc.</span>
+    <span style="color: #408080; font-style: italic">#   i.e., grads[k] holds the gradient for self.params[k].</span>
+    <span style="color: #408080; font-style: italic">#</span>
+    <span style="color: #408080; font-style: italic">#   Add L2 regularization, where there is an added cost 0.5*self.reg*W^2</span>
+    <span style="color: #408080; font-style: italic">#   for each W.  Be sure to include the 0.5 multiplying factor to </span>
+    <span style="color: #408080; font-style: italic">#   match our implementation.</span>
+    <span style="color: #408080; font-style: italic">#</span>
+    <span style="color: #408080; font-style: italic">#   And be sure to use the layers you prior implemented.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #    </span>
+    
+    loss, ds <span style="color: #666666">=</span> softmax_loss(scores, y)
+    dreg <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>reg <span style="color: #666666">*</span> <span style="color: #666666">0.5*</span>(np<span style="color: #666666">.</span>sum(<span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W1&#39;</span>] <span style="color: #666666">**</span> <span style="color: #666666">2</span>) <span style="color: #666666">+</span> np<span style="color: #666666">.</span>sum(<span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W2&#39;</span>] <span style="color: #666666">**</span> <span style="color: #666666">2</span>))
+    loss <span style="color: #666666">+=</span> dreg
+
+    d_h1, grads[<span style="color: #BA2121">&#39;W2&#39;</span>], grads[<span style="color: #BA2121">&#39;b2&#39;</span>] <span style="color: #666666">=</span> affine_backward(ds, cache2)
+    grads[<span style="color: #BA2121">&#39;W2&#39;</span>] <span style="color: #666666">+=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>reg <span style="color: #666666">*</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W2&#39;</span>]
+
+    dx, grads[<span style="color: #BA2121">&#39;W1&#39;</span>], grads[<span style="color: #BA2121">&#39;b1&#39;</span>] <span style="color: #666666">=</span> affine_relu_backward(d_h1, cache1)
+    grads[<span style="color: #BA2121">&#39;W1&#39;</span>] <span style="color: #666666">+=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>reg <span style="color: #666666">*</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W1&#39;</span>]
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    
+    <span style="color: #008000; font-weight: bold">return</span> loss, grads
+
+
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">FullyConnectedNet</span>(<span style="color: #008000">object</span>):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    A fully-connected neural network with an arbitrary number of hidden layers,</span>
+<span style="color: #BA2121; font-style: italic">    ReLU nonlinearities, and a softmax loss function. This will also implement</span>
+<span style="color: #BA2121; font-style: italic">    dropout and batch normalization as options. For a network with L layers,</span>
+<span style="color: #BA2121; font-style: italic">    the architecture will be</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    {affine - [batch norm] - relu - [dropout]} x (L - 1) - affine - softmax</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    where batch normalization and dropout are optional, and the {...} block is</span>
+<span style="color: #BA2121; font-style: italic">    repeated L - 1 times.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    Similar to the TwoLayerNet above, learnable parameters are stored in the</span>
+<span style="color: #BA2121; font-style: italic">    self.params dictionary and will be learned using the Solver class.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, hidden_dims, input_dim<span style="color: #666666">=3*32*32</span>, num_classes<span style="color: #666666">=10</span>,
+               dropout<span style="color: #666666">=0</span>, use_batchnorm<span style="color: #666666">=</span><span style="color: #008000">False</span>, reg<span style="color: #666666">=0.0</span>,
+               weight_scale<span style="color: #666666">=1e-2</span>, dtype<span style="color: #666666">=</span>np<span style="color: #666666">.</span>float32, seed<span style="color: #666666">=</span><span style="color: #008000">None</span>):
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        Initialize a new FullyConnectedNet.</span>
+<span style="color: #BA2121; font-style: italic">        </span>
+<span style="color: #BA2121; font-style: italic">        Inputs:</span>
+<span style="color: #BA2121; font-style: italic">        - hidden_dims: A list of integers giving the size of each hidden layer.</span>
+<span style="color: #BA2121; font-style: italic">        - input_dim: An integer giving the size of the input.</span>
+<span style="color: #BA2121; font-style: italic">        - num_classes: An integer giving the number of classes to classify.</span>
+<span style="color: #BA2121; font-style: italic">        - dropout: Scalar between 0 and 1 giving dropout strength. If dropout=1 then</span>
+<span style="color: #BA2121; font-style: italic">          the network should not use dropout at all.</span>
+<span style="color: #BA2121; font-style: italic">        - use_batchnorm: Whether or not the network should use batch normalization.</span>
+<span style="color: #BA2121; font-style: italic">        - reg: Scalar giving L2 regularization strength.</span>
+<span style="color: #BA2121; font-style: italic">        - weight_scale: Scalar giving the standard deviation for random</span>
+<span style="color: #BA2121; font-style: italic">          initialization of the weights.</span>
+<span style="color: #BA2121; font-style: italic">        - dtype: A numpy datatype object; all computations will be performed using</span>
+<span style="color: #BA2121; font-style: italic">          this datatype. float32 is faster but less accurate, so you should use</span>
+<span style="color: #BA2121; font-style: italic">          float64 for numeric gradient checking.</span>
+<span style="color: #BA2121; font-style: italic">        - seed: If not None, then pass this random seed to the dropout layers. This</span>
+<span style="color: #BA2121; font-style: italic">          will make the dropout layers deteriminstic so we can gradient check the</span>
+<span style="color: #BA2121; font-style: italic">          model.</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>use_batchnorm <span style="color: #666666">=</span> use_batchnorm
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>use_dropout <span style="color: #666666">=</span> dropout <span style="color: #666666">&lt;</span> <span style="color: #666666">1</span>
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>reg <span style="color: #666666">=</span> reg
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers <span style="color: #666666">=</span> <span style="color: #666666">1</span> <span style="color: #666666">+</span> <span style="color: #008000">len</span>(hidden_dims)
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>dtype <span style="color: #666666">=</span> dtype
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>params <span style="color: #666666">=</span> {}
+
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+        <span style="color: #408080; font-style: italic">#   Initialize all parameters of the network in the self.params dictionary.</span>
+        <span style="color: #408080; font-style: italic">#   The weights and biases of layer 1 are W1 and b1; and in general the </span>
+        <span style="color: #408080; font-style: italic">#   weights and biases of layer i are Wi and bi. The</span>
+        <span style="color: #408080; font-style: italic">#   biases are initialized to zero and the weights are initialized</span>
+        <span style="color: #408080; font-style: italic">#   so that each parameter has mean 0 and standard deviation weight_scale.</span>
+        <span style="color: #408080; font-style: italic">#</span>
+        <span style="color: #408080; font-style: italic">#   BATCHNORM: Initialize the gammas of each layer to 1 and the beta</span>
+        <span style="color: #408080; font-style: italic">#   parameters to zero.  The gamma and beta parameters for layer 1 should</span>
+        <span style="color: #408080; font-style: italic">#   be self.params[&#39;gamma1&#39;] and self.params[&#39;beta1&#39;].  For layer 2, they</span>
+        <span style="color: #408080; font-style: italic">#   should be gamma2 and beta2, etc. Only use batchnorm if self.use_batchnorm </span>
+        <span style="color: #408080; font-style: italic">#   is true and DO NOT do batch normalize the output scores.</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        
+        layer_dims <span style="color: #666666">=</span> np<span style="color: #666666">.</span>hstack((input_dim, hidden_dims, num_classes))
+
+        <span style="color: #008000; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">range</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers):
+          Wi <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;W&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i <span style="color: #666666">+</span> <span style="color: #666666">1</span>)
+          bi <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;b&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i <span style="color: #666666">+</span> <span style="color: #666666">1</span>)
+          <span style="color: #008000">self</span><span style="color: #666666">.</span>params[Wi] <span style="color: #666666">=</span> weight_scale <span style="color: #666666">*</span> np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>randn(layer_dims[i], layer_dims[i <span style="color: #666666">+</span> <span style="color: #666666">1</span>])
+          <span style="color: #008000">self</span><span style="color: #666666">.</span>params[bi] <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros(layer_dims[i <span style="color: #666666">+</span> <span style="color: #666666">1</span>])
+
+          <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>use_batchnorm:
+            <span style="color: #008000; font-weight: bold">if</span> i <span style="color: #666666">==</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers <span style="color: #666666">-</span> <span style="color: #666666">1</span>:
+                <span style="color: #008000; font-weight: bold">break</span>
+            gamma_i <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;gamma&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i<span style="color: #666666">+1</span>)
+            beta_i <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;beta&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i<span style="color: #666666">+1</span>)
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>params[gamma_i] <span style="color: #666666">=</span> np<span style="color: #666666">.</span>ones(hidden_dims[i], ) <span style="color: #408080; font-style: italic">#Potentially make this a ( ,)</span>
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>params[beta_i] <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros(hidden_dims[i], )
+
+
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        
+        <span style="color: #408080; font-style: italic"># When using dropout we need to pass a dropout_param dictionary to each</span>
+        <span style="color: #408080; font-style: italic"># dropout layer so that the layer knows the dropout probability and the mode</span>
+        <span style="color: #408080; font-style: italic"># (train / test). You can pass the same dropout_param to each dropout layer.</span>
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>dropout_param <span style="color: #666666">=</span> {}
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>use_dropout:
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>dropout_param <span style="color: #666666">=</span> {<span style="color: #BA2121">&#39;mode&#39;</span>: <span style="color: #BA2121">&#39;train&#39;</span>, <span style="color: #BA2121">&#39;p&#39;</span>: dropout}
+        <span style="color: #008000; font-weight: bold">if</span> seed <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">None</span>:
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>dropout_param[<span style="color: #BA2121">&#39;seed&#39;</span>] <span style="color: #666666">=</span> seed
+    
+        <span style="color: #408080; font-style: italic"># With batch normalization we need to keep track of running means and</span>
+        <span style="color: #408080; font-style: italic"># variances, so we need to pass a special bn_param object to each batch</span>
+        <span style="color: #408080; font-style: italic"># normalization layer. You should pass self.bn_params[0] to the forward pass</span>
+        <span style="color: #408080; font-style: italic"># of the first batch normalization layer, self.bn_params[1] to the forward</span>
+        <span style="color: #408080; font-style: italic"># pass of the second batch normalization layer, etc.</span>
+        <span style="color: #008000">self</span><span style="color: #666666">.</span>bn_params <span style="color: #666666">=</span> []
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>use_batchnorm:
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>bn_params <span style="color: #666666">=</span> [{<span style="color: #BA2121">&#39;mode&#39;</span>: <span style="color: #BA2121">&#39;train&#39;</span>} <span style="color: #008000; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> np<span style="color: #666666">.</span>arange(<span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers <span style="color: #666666">-</span> <span style="color: #666666">1</span>)]
+        
+        <span style="color: #408080; font-style: italic"># Cast all parameters to the correct datatype</span>
+        <span style="color: #008000; font-weight: bold">for</span> k, v <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>params<span style="color: #666666">.</span>items():
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>params[k] <span style="color: #666666">=</span> v<span style="color: #666666">.</span>astype(dtype)
+
+
+    <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">loss</span>(<span style="color: #008000">self</span>, X, y<span style="color: #666666">=</span><span style="color: #008000">None</span>):
+        <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">        Compute loss and gradient for the fully-connected net.</span>
+
+<span style="color: #BA2121; font-style: italic">        Input / output: Same as TwoLayerNet above.</span>
+<span style="color: #BA2121; font-style: italic">        &quot;&quot;&quot;</span>
+        X <span style="color: #666666">=</span> X<span style="color: #666666">.</span>astype(<span style="color: #008000">self</span><span style="color: #666666">.</span>dtype)
+        mode <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;test&#39;</span> <span style="color: #008000; font-weight: bold">if</span> y <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #008000">None</span> <span style="color: #008000; font-weight: bold">else</span> <span style="color: #BA2121">&#39;train&#39;</span>
+
+        <span style="color: #408080; font-style: italic"># Set train/test mode for batchnorm params and dropout param since they</span>
+        <span style="color: #408080; font-style: italic"># behave differently during training and testing.</span>
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>dropout_param <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">None</span>:
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>dropout_param[<span style="color: #BA2121">&#39;mode&#39;</span>] <span style="color: #666666">=</span> mode   
+        <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>use_batchnorm:
+            <span style="color: #008000; font-weight: bold">for</span> bn_param <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>bn_params:
+                bn_param[mode] <span style="color: #666666">=</span> mode
+
+        scores <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+        <span style="color: #408080; font-style: italic">#   Implement the forward pass of the FC net and store the output</span>
+        <span style="color: #408080; font-style: italic">#   scores as the variable &quot;scores&quot;.</span>
+        <span style="color: #408080; font-style: italic">#</span>
+        <span style="color: #408080; font-style: italic">#   BATCHNORM: If self.use_batchnorm is true, insert a bathnorm layer</span>
+        <span style="color: #408080; font-style: italic">#   between the affine_forward and relu_forward layers.  You may</span>
+        <span style="color: #408080; font-style: italic">#   also write an affine_batchnorm_relu() function in layer_utils.py.</span>
+        <span style="color: #408080; font-style: italic">#</span>
+        <span style="color: #408080; font-style: italic">#   DROPOUT: If dropout is non-zero, insert a dropout layer after</span>
+        <span style="color: #408080; font-style: italic">#   every ReLU layer.</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        cache <span style="color: #666666">=</span> {}
+        dropout <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>dropout_param<span style="color: #666666">.</span>get(<span style="color: #BA2121">&#39;p&#39;</span>)
+        use_dropout <span style="color: #666666">=</span> dropout <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">None</span>
+        hidden <span style="color: #666666">=</span> np<span style="color: #666666">.</span>copy(X)
+        <span style="color: #408080; font-style: italic">#print(&#39;self.num_layers: &#39;, self.num_layers)</span>
+        <span style="color: #008000; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">list</span>(<span style="color: #008000">range</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers <span style="color: #666666">-</span> <span style="color: #666666">1</span>)):
+            Wi <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;W&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i <span style="color: #666666">+</span> <span style="color: #666666">1</span>)
+            bi <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;b&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i<span style="color: #666666">+1</span>)
+            ci <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;c&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i<span style="color: #666666">+1</span>)
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>use_batchnorm:
+                gamma_i <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;gamma&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i<span style="color: #666666">+1</span>)
+                beta_i <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;beta&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i<span style="color: #666666">+1</span>)
+                hidden, cache[ci] <span style="color: #666666">=</span> affine_batchnorm_relu_forward(hidden, <span style="color: #008000">self</span><span style="color: #666666">.</span>params[Wi], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[bi],
+                    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[gamma_i], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[beta_i], <span style="color: #008000">self</span><span style="color: #666666">.</span>bn_params[i<span style="color: #666666">-1</span>])
+            <span style="color: #008000; font-weight: bold">else</span>:
+                hidden, cache[ci] <span style="color: #666666">=</span> affine_relu_forward(hidden, <span style="color: #008000">self</span><span style="color: #666666">.</span>params[Wi], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[bi])
+
+            <span style="color: #008000; font-weight: bold">if</span> use_dropout:
+                hidden, dropout_cache <span style="color: #666666">=</span> dropout_forward(hidden, <span style="color: #008000">self</span><span style="color: #666666">.</span>dropout_param)
+                cache[ci] <span style="color: #666666">=</span> <span style="color: #666666">*</span>cache[ci], dropout_cache
+        <span style="color: #408080; font-style: italic">#print(&#39;self.params&#39;, self.params)</span>
+
+        scores, cache[<span style="color: #BA2121">&#39;c&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers)] <span style="color: #666666">=</span> affine_forward(hidden, <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers)],
+            <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b&#39;</span><span style="color: #666666">+</span><span style="color: #008000">str</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers)])
+
+
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        
+        <span style="color: #408080; font-style: italic"># If test mode return early</span>
+        <span style="color: #008000; font-weight: bold">if</span> mode <span style="color: #666666">==</span> <span style="color: #BA2121">&#39;test&#39;</span>:
+            <span style="color: #008000; font-weight: bold">return</span> scores
+
+        loss, grads <span style="color: #666666">=</span> <span style="color: #666666">0.0</span>, {}
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+        <span style="color: #408080; font-style: italic">#   Implement the backwards pass of the FC net and store the gradients</span>
+        <span style="color: #408080; font-style: italic">#   in the grads dict, so that grads[k] is the gradient of self.params[k]</span>
+        <span style="color: #408080; font-style: italic">#   Be sure your L2 regularization includes a 0.5 factor.</span>
+        <span style="color: #408080; font-style: italic">#</span>
+        <span style="color: #408080; font-style: italic">#   BATCHNORM: Incorporate the backward pass of the batchnorm.</span>
+        <span style="color: #408080; font-style: italic">#</span>
+        <span style="color: #408080; font-style: italic">#   DROPOUT: Incorporate the backward pass of dropout.</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        loss, ds <span style="color: #666666">=</span> softmax_loss(scores, y)
+        dh <span style="color: #666666">=</span> np<span style="color: #666666">.</span>copy(ds)
+        dh, dw, db <span style="color: #666666">=</span> affine_backward(dh, cache[<span style="color: #BA2121">&#39;c&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers)])
+        dreg <span style="color: #666666">=</span> <span style="color: #666666">0</span>
+        grads[<span style="color: #BA2121">&#39;W&#39;</span><span style="color: #666666">+</span><span style="color: #008000">str</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers)] <span style="color: #666666">=</span> dw
+        grads[<span style="color: #BA2121">&#39;b&#39;</span><span style="color: #666666">+</span><span style="color: #008000">str</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers)] <span style="color: #666666">=</span> db
+        <span style="color: #408080; font-style: italic">#print(&#39;dh&#39;, dh)</span>
+        <span style="color: #008000; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">range</span>(<span style="color: #008000">self</span><span style="color: #666666">.</span>num_layers<span style="color: #666666">-1</span>, <span style="color: #666666">0</span>, <span style="color: #666666">-1</span>):
+            Wi <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;W&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i)
+            bi <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;b&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i)
+            ci <span style="color: #666666">=</span> <span style="color: #BA2121">&#39;c&#39;</span> <span style="color: #666666">+</span> <span style="color: #008000">str</span>(i)
+            <span style="color: #408080; font-style: italic">#dreg += np.sum(self.params[Wi]**2)</span>
+
+            <span style="color: #008000; font-weight: bold">if</span> use_dropout:
+                dropout_cache <span style="color: #666666">=</span> cache[ci][<span style="color: #666666">-1</span>]
+                dh <span style="color: #666666">=</span> dropout_backward(dh, dropout_cache)
+
+            <span style="color: #008000; font-weight: bold">if</span> <span style="color: #AA22FF; font-weight: bold">not</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>use_batchnorm:
+                _Cache <span style="color: #666666">=</span> cache[ci][<span style="color: #666666">0</span>], cache[ci][<span style="color: #666666">1</span>]
+                dh, dw, db <span style="color: #666666">=</span> affine_relu_backward(dh, _Cache)
+            <span style="color: #008000; font-weight: bold">else</span>: <span style="color: #408080; font-style: italic">#Use batch norm</span>
+                fc_cache <span style="color: #666666">=</span> cache[ci][<span style="color: #666666">0</span>]
+                bn_cache <span style="color: #666666">=</span> cache[ci][<span style="color: #666666">1</span>]
+                relu_cache <span style="color: #666666">=</span> cache[ci][<span style="color: #666666">2</span>]
+                <span style="color: #408080; font-style: italic">#print(&#39;dh&#39;, dh, &#39;relu_cache&#39;, relu_cache)</span>
+                dh <span style="color: #666666">=</span> relu_backward(dh, relu_cache)
+                dh, dgamma, dbeta <span style="color: #666666">=</span> batchnorm_backward(dh, bn_cache)
+                grads[<span style="color: #BA2121">&#39;gamma&#39;</span><span style="color: #666666">+</span><span style="color: #008000">str</span>(i)] <span style="color: #666666">=</span> dgamma
+                grads[<span style="color: #BA2121">&#39;beta&#39;</span><span style="color: #666666">+</span><span style="color: #008000">str</span>(i)] <span style="color: #666666">=</span> dbeta
+                dh, dw, db <span style="color: #666666">=</span> affine_backward(dh, fc_cache)
+
+            grads[Wi] <span style="color: #666666">=</span> dw
+            grads[bi] <span style="color: #666666">=</span> db
+            grads[Wi] <span style="color: #666666">+=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>reg <span style="color: #666666">*</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>params[Wi]
+            dreg <span style="color: #666666">+=</span> np<span style="color: #666666">.</span>sum(<span style="color: #008000">self</span><span style="color: #666666">.</span>params[Wi]<span style="color: #666666">**2</span>)
+
+        dreg <span style="color: #666666">*=</span> <span style="color: #666666">0.5</span> <span style="color: #666666">*</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>reg
+        loss <span style="color: #666666">+=</span> dreg
+
+        
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+        <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+        
+        <span style="color: #008000; font-weight: bold">return</span> loss, grads
+</pre></div>
+</body>
+</html>

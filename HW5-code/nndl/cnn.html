@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=None">
+  <style type="text/css">
+td.linenos { background-color: #f0f0f0; padding-right: 10px; }
+span.lineno { background-color: #f0f0f0; padding: 0 5px 0 5px; }
+pre { line-height: 125%; }
+body .hll { background-color: #ffffcc }
+body  { background: #f8f8f8; }
+body .c { color: #408080; font-style: italic } /* Comment */
+body .err { border: 1px solid #FF0000 } /* Error */
+body .k { color: #008000; font-weight: bold } /* Keyword */
+body .o { color: #666666 } /* Operator */
+body .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+body .cp { color: #BC7A00 } /* Comment.Preproc */
+body .c1 { color: #408080; font-style: italic } /* Comment.Single */
+body .cs { color: #408080; font-style: italic } /* Comment.Special */
+body .gd { color: #A00000 } /* Generic.Deleted */
+body .ge { font-style: italic } /* Generic.Emph */
+body .gr { color: #FF0000 } /* Generic.Error */
+body .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+body .gi { color: #00A000 } /* Generic.Inserted */
+body .go { color: #888888 } /* Generic.Output */
+body .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+body .gs { font-weight: bold } /* Generic.Strong */
+body .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+body .gt { color: #0044DD } /* Generic.Traceback */
+body .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+body .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+body .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+body .kp { color: #008000 } /* Keyword.Pseudo */
+body .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+body .kt { color: #B00040 } /* Keyword.Type */
+body .m { color: #666666 } /* Literal.Number */
+body .s { color: #BA2121 } /* Literal.String */
+body .na { color: #7D9029 } /* Name.Attribute */
+body .nb { color: #008000 } /* Name.Builtin */
+body .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+body .no { color: #880000 } /* Name.Constant */
+body .nd { color: #AA22FF } /* Name.Decorator */
+body .ni { color: #999999; font-weight: bold } /* Name.Entity */
+body .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+body .nf { color: #0000FF } /* Name.Function */
+body .nl { color: #A0A000 } /* Name.Label */
+body .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+body .nt { color: #008000; font-weight: bold } /* Name.Tag */
+body .nv { color: #19177C } /* Name.Variable */
+body .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+body .w { color: #bbbbbb } /* Text.Whitespace */
+body .mf { color: #666666 } /* Literal.Number.Float */
+body .mh { color: #666666 } /* Literal.Number.Hex */
+body .mi { color: #666666 } /* Literal.Number.Integer */
+body .mo { color: #666666 } /* Literal.Number.Oct */
+body .sb { color: #BA2121 } /* Literal.String.Backtick */
+body .sc { color: #BA2121 } /* Literal.String.Char */
+body .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+body .s2 { color: #BA2121 } /* Literal.String.Double */
+body .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+body .sh { color: #BA2121 } /* Literal.String.Heredoc */
+body .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+body .sx { color: #008000 } /* Literal.String.Other */
+body .sr { color: #BB6688 } /* Literal.String.Regex */
+body .s1 { color: #BA2121 } /* Literal.String.Single */
+body .ss { color: #19177C } /* Literal.String.Symbol */
+body .bp { color: #008000 } /* Name.Builtin.Pseudo */
+body .vc { color: #19177C } /* Name.Variable.Class */
+body .vg { color: #19177C } /* Name.Variable.Global */
+body .vi { color: #19177C } /* Name.Variable.Instance */
+body .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+  </style>
+</head>
+<body>
+<h2></h2>
+
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span>
+
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">nndl.layers</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #666666">*</span>
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">nndl.conv_layers</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #666666">*</span>
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">cs231n.fast_layers</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #666666">*</span>
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">nndl.layer_utils</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #666666">*</span>
+<span style="color: #008000; font-weight: bold">from</span> <span style="color: #0000FF; font-weight: bold">nndl.conv_layer_utils</span> <span style="color: #008000; font-weight: bold">import</span> <span style="color: #666666">*</span>
+
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">pdb</span>
+
+<span style="color: #BA2121; font-style: italic">&quot;&quot;&quot; </span>
+<span style="color: #BA2121; font-style: italic">This code was originally written for CS 231n at Stanford University</span>
+<span style="color: #BA2121; font-style: italic">(cs231n.stanford.edu).  It has been modified in various areas for use in the</span>
+<span style="color: #BA2121; font-style: italic">ECE 239AS class at UCLA.  This includes the descriptions of what code to</span>
+<span style="color: #BA2121; font-style: italic">implement as well as some slight potential changes in variable names to be</span>
+<span style="color: #BA2121; font-style: italic">consistent with class nomenclature.  We thank Justin Johnson &amp; Serena Yeung for</span>
+<span style="color: #BA2121; font-style: italic">permission to use this code.  To see the original version, please visit</span>
+<span style="color: #BA2121; font-style: italic">cs231n.stanford.edu.  </span>
+<span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">ThreeLayerConvNet</span>(<span style="color: #008000">object</span>):
+  <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">  A three-layer convolutional network with the following architecture:</span>
+<span style="color: #BA2121; font-style: italic">  </span>
+<span style="color: #BA2121; font-style: italic">  conv - relu - 2x2 max pool - affine - relu - affine - softmax</span>
+<span style="color: #BA2121; font-style: italic">  </span>
+<span style="color: #BA2121; font-style: italic">  The network operates on minibatches of data that have shape (N, C, H, W)</span>
+<span style="color: #BA2121; font-style: italic">  consisting of N images, each with height H and width W and with C input</span>
+<span style="color: #BA2121; font-style: italic">  channels.</span>
+<span style="color: #BA2121; font-style: italic">  &quot;&quot;&quot;</span>
+  
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, input_dim<span style="color: #666666">=</span>(<span style="color: #666666">3</span>, <span style="color: #666666">32</span>, <span style="color: #666666">32</span>), num_filters<span style="color: #666666">=32</span>, filter_size<span style="color: #666666">=7</span>,
+               hidden_dim<span style="color: #666666">=100</span>, num_classes<span style="color: #666666">=10</span>, weight_scale<span style="color: #666666">=1e-3</span>, reg<span style="color: #666666">=0.0</span>,
+               dtype<span style="color: #666666">=</span>np<span style="color: #666666">.</span>float32, use_batchnorm<span style="color: #666666">=</span><span style="color: #008000">False</span>):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Initialize a new network.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - input_dim: Tuple (C, H, W) giving size of input data</span>
+<span style="color: #BA2121; font-style: italic">    - num_filters: Number of filters to use in the convolutional layer</span>
+<span style="color: #BA2121; font-style: italic">    - filter_size: Size of filters to use in the convolutional layer</span>
+<span style="color: #BA2121; font-style: italic">    - hidden_dim: Number of units to use in the fully-connected hidden layer</span>
+<span style="color: #BA2121; font-style: italic">    - num_classes: Number of scores to produce from the final affine layer.</span>
+<span style="color: #BA2121; font-style: italic">    - weight_scale: Scalar giving standard deviation for random initialization</span>
+<span style="color: #BA2121; font-style: italic">      of weights.</span>
+<span style="color: #BA2121; font-style: italic">    - reg: Scalar giving L2 regularization strength</span>
+<span style="color: #BA2121; font-style: italic">    - dtype: numpy datatype to use for computation.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>use_batchnorm <span style="color: #666666">=</span> use_batchnorm
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params <span style="color: #666666">=</span> {}
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>reg <span style="color: #666666">=</span> reg
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>dtype <span style="color: #666666">=</span> dtype
+
+    
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Initialize the weights and biases of a three layer CNN. To initialize:</span>
+    <span style="color: #408080; font-style: italic">#     - the biases should be initialized to zeros.</span>
+    <span style="color: #408080; font-style: italic">#     - the weights should be initialized to a matrix with entries</span>
+    <span style="color: #408080; font-style: italic">#         drawn from a Gaussian distribution with zero mean and </span>
+    <span style="color: #408080; font-style: italic">#         standard deviation given by weight_scale.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    C,H,W <span style="color: #666666">=</span> input_dim
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W1&#39;</span>] <span style="color: #666666">=</span> weight_scale <span style="color: #666666">*</span> np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>randn(num_filters, C, filter_size, filter_size)
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b1&#39;</span>] <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros(num_filters)
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W2&#39;</span>] <span style="color: #666666">=</span> weight_scale <span style="color: #666666">*</span> np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>randn(num_filters <span style="color: #666666">*</span> H <span style="color: #666666">*</span> W <span style="color: #666666">//</span> <span style="color: #666666">4</span>, hidden_dim)
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b2&#39;</span>] <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros(hidden_dim)
+
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W3&#39;</span>] <span style="color: #666666">=</span> weight_scale <span style="color: #666666">*</span> np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>randn(hidden_dim, num_classes)
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b3&#39;</span>] <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros(num_classes)
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    <span style="color: #008000; font-weight: bold">for</span> k, v <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>params<span style="color: #666666">.</span>items():
+      <span style="color: #008000">self</span><span style="color: #666666">.</span>params[k] <span style="color: #666666">=</span> v<span style="color: #666666">.</span>astype(dtype)
+     
+ 
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">loss</span>(<span style="color: #008000">self</span>, X, y<span style="color: #666666">=</span><span style="color: #008000">None</span>):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Evaluate loss and gradient for the three-layer convolutional network.</span>
+<span style="color: #BA2121; font-style: italic">    </span>
+<span style="color: #BA2121; font-style: italic">    Input / output: Same API as TwoLayerNet in fc_net.py.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    W1, b1 <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W1&#39;</span>], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b1&#39;</span>]
+    W2, b2 <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W2&#39;</span>], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b2&#39;</span>]
+    W3, b3 <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W3&#39;</span>], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b3&#39;</span>]
+    
+    <span style="color: #408080; font-style: italic"># pass conv_param to the forward pass for the convolutional layer</span>
+    filter_size <span style="color: #666666">=</span> W1<span style="color: #666666">.</span>shape[<span style="color: #666666">2</span>]
+    conv_param <span style="color: #666666">=</span> {<span style="color: #BA2121">&#39;stride&#39;</span>: <span style="color: #666666">1</span>, <span style="color: #BA2121">&#39;pad&#39;</span>: (filter_size <span style="color: #666666">-</span> <span style="color: #666666">1</span>) <span style="color: #666666">/</span> <span style="color: #666666">2</span>}
+
+    <span style="color: #408080; font-style: italic"># pass pool_param to the forward pass for the max-pooling layer</span>
+    pool_param <span style="color: #666666">=</span> {<span style="color: #BA2121">&#39;pool_height&#39;</span>: <span style="color: #666666">2</span>, <span style="color: #BA2121">&#39;pool_width&#39;</span>: <span style="color: #666666">2</span>, <span style="color: #BA2121">&#39;stride&#39;</span>: <span style="color: #666666">2</span>}
+
+    scores <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+    
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Implement the forward pass of the three layer CNN.  Store the output</span>
+    <span style="color: #408080; font-style: italic">#   scores as the variable &quot;scores&quot;.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    
+    h1, cache1 <span style="color: #666666">=</span> conv_relu_pool_forward(X, <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W1&#39;</span>], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b1&#39;</span>], conv_param, pool_param)
+    h2, cache2 <span style="color: #666666">=</span> affine_relu_forward(h1, <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W2&#39;</span>], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b2&#39;</span>])
+    scores,cache3 <span style="color: #666666">=</span> affine_forward(h2, <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W3&#39;</span>], <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;b3&#39;</span>])
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    <span style="color: #008000; font-weight: bold">if</span> y <span style="color: #AA22FF; font-weight: bold">is</span> <span style="color: #008000">None</span>:
+      <span style="color: #008000; font-weight: bold">return</span> scores
+    
+    loss, grads <span style="color: #666666">=</span> <span style="color: #666666">0</span>, {}
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Implement the backward pass of the three layer CNN.  Store the grads</span>
+    <span style="color: #408080; font-style: italic">#   in the grads dictionary, exactly as before (i.e., the gradient of </span>
+    <span style="color: #408080; font-style: italic">#   self.params[k] will be grads[k]).  Store the loss as &quot;loss&quot;, and</span>
+    <span style="color: #408080; font-style: italic">#   don&#39;t forget to add regularization on ALL weight matrices.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    loss,dout <span style="color: #666666">=</span> softmax_loss(scores,y)
+    dreg <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>reg <span style="color: #666666">*</span> <span style="color: #666666">0.5</span> <span style="color: #666666">*</span> (np<span style="color: #666666">.</span>sum(<span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W1&#39;</span>]<span style="color: #666666">**2</span>) <span style="color: #666666">+</span> np<span style="color: #666666">.</span>sum(<span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W2&#39;</span>]<span style="color: #666666">**2</span>) <span style="color: #666666">+</span> np<span style="color: #666666">.</span>sum(<span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W3&#39;</span>]<span style="color: #666666">**2</span>))
+    loss <span style="color: #666666">+=</span> dreg
+    dout,grads[<span style="color: #BA2121">&#39;W3&#39;</span>], grads[<span style="color: #BA2121">&#39;b3&#39;</span>] <span style="color: #666666">=</span> affine_backward(dout,cache3)
+    grads[<span style="color: #BA2121">&#39;W3&#39;</span>] <span style="color: #666666">+=</span> <span style="color: #666666">2</span> <span style="color: #666666">*</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>reg <span style="color: #666666">*</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W3&#39;</span>]
+    dout,grads[<span style="color: #BA2121">&#39;W2&#39;</span>], grads[<span style="color: #BA2121">&#39;b2&#39;</span>] <span style="color: #666666">=</span> affine_relu_backward(dout,cache2)
+    grads[<span style="color: #BA2121">&#39;W2&#39;</span>] <span style="color: #666666">+=</span> <span style="color: #666666">2</span> <span style="color: #666666">*</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>reg<span style="color: #666666">*</span><span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W2&#39;</span>]
+    _, grads[<span style="color: #BA2121">&#39;W1&#39;</span>], grads[<span style="color: #BA2121">&#39;b1&#39;</span>] <span style="color: #666666">=</span> conv_relu_pool_backward(dout,cache1)
+    grads[<span style="color: #BA2121">&#39;W1&#39;</span>] <span style="color: #666666">+=</span> <span style="color: #666666">2</span> <span style="color: #666666">*</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>reg <span style="color: #666666">*</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>params[<span style="color: #BA2121">&#39;W1&#39;</span>]    
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    <span style="color: #008000; font-weight: bold">return</span> loss, grads
+  
+  
+<span style="color: #008000; font-weight: bold">pass</span>
+</pre></div>
+</body>
+</html>

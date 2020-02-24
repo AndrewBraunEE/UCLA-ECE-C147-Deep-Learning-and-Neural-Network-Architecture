@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=None">
+  <style type="text/css">
+td.linenos { background-color: #f0f0f0; padding-right: 10px; }
+span.lineno { background-color: #f0f0f0; padding: 0 5px 0 5px; }
+pre { line-height: 125%; }
+body .hll { background-color: #ffffcc }
+body  { background: #f8f8f8; }
+body .c { color: #408080; font-style: italic } /* Comment */
+body .err { border: 1px solid #FF0000 } /* Error */
+body .k { color: #008000; font-weight: bold } /* Keyword */
+body .o { color: #666666 } /* Operator */
+body .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+body .cp { color: #BC7A00 } /* Comment.Preproc */
+body .c1 { color: #408080; font-style: italic } /* Comment.Single */
+body .cs { color: #408080; font-style: italic } /* Comment.Special */
+body .gd { color: #A00000 } /* Generic.Deleted */
+body .ge { font-style: italic } /* Generic.Emph */
+body .gr { color: #FF0000 } /* Generic.Error */
+body .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+body .gi { color: #00A000 } /* Generic.Inserted */
+body .go { color: #888888 } /* Generic.Output */
+body .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+body .gs { font-weight: bold } /* Generic.Strong */
+body .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+body .gt { color: #0044DD } /* Generic.Traceback */
+body .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+body .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+body .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+body .kp { color: #008000 } /* Keyword.Pseudo */
+body .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+body .kt { color: #B00040 } /* Keyword.Type */
+body .m { color: #666666 } /* Literal.Number */
+body .s { color: #BA2121 } /* Literal.String */
+body .na { color: #7D9029 } /* Name.Attribute */
+body .nb { color: #008000 } /* Name.Builtin */
+body .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+body .no { color: #880000 } /* Name.Constant */
+body .nd { color: #AA22FF } /* Name.Decorator */
+body .ni { color: #999999; font-weight: bold } /* Name.Entity */
+body .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+body .nf { color: #0000FF } /* Name.Function */
+body .nl { color: #A0A000 } /* Name.Label */
+body .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+body .nt { color: #008000; font-weight: bold } /* Name.Tag */
+body .nv { color: #19177C } /* Name.Variable */
+body .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+body .w { color: #bbbbbb } /* Text.Whitespace */
+body .mf { color: #666666 } /* Literal.Number.Float */
+body .mh { color: #666666 } /* Literal.Number.Hex */
+body .mi { color: #666666 } /* Literal.Number.Integer */
+body .mo { color: #666666 } /* Literal.Number.Oct */
+body .sb { color: #BA2121 } /* Literal.String.Backtick */
+body .sc { color: #BA2121 } /* Literal.String.Char */
+body .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+body .s2 { color: #BA2121 } /* Literal.String.Double */
+body .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+body .sh { color: #BA2121 } /* Literal.String.Heredoc */
+body .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+body .sx { color: #008000 } /* Literal.String.Other */
+body .sr { color: #BB6688 } /* Literal.String.Regex */
+body .s1 { color: #BA2121 } /* Literal.String.Single */
+body .ss { color: #19177C } /* Literal.String.Symbol */
+body .bp { color: #008000 } /* Name.Builtin.Pseudo */
+body .vc { color: #19177C } /* Name.Variable.Class */
+body .vg { color: #19177C } /* Name.Variable.Global */
+body .vi { color: #19177C } /* Name.Variable.Instance */
+body .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+  </style>
+</head>
+<body>
+<h2></h2>
+
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%"><span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">numpy</span> <span style="color: #008000; font-weight: bold">as</span> <span style="color: #0000FF; font-weight: bold">np</span>
+<span style="color: #008000; font-weight: bold">import</span> <span style="color: #0000FF; font-weight: bold">pdb</span>
+
+<span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">This code was based off of code from cs231n at Stanford University, and modified for ECE C147/C247 at UCLA.</span>
+<span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #008000; font-weight: bold">class</span> <span style="color: #0000FF; font-weight: bold">SVM</span>(<span style="color: #008000">object</span>):
+
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">__init__</span>(<span style="color: #008000">self</span>, dims<span style="color: #666666">=</span>[<span style="color: #666666">10</span>, <span style="color: #666666">3073</span>]):
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>init_weights(dims<span style="color: #666666">=</span>dims)
+
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">init_weights</span>(<span style="color: #008000">self</span>, dims):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">	Initializes the weight matrix of the SVM.  Note that it has shape (C, D)</span>
+<span style="color: #BA2121; font-style: italic">	where C is the number of classes and D is the feature size.</span>
+<span style="color: #BA2121; font-style: italic">	&quot;&quot;&quot;</span>
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>W <span style="color: #666666">=</span> np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>normal(size<span style="color: #666666">=</span>dims)
+
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">loss</span>(<span style="color: #008000">self</span>, X, y):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Calculates the SVM loss.</span>
+<span style="color: #BA2121; font-style: italic">  </span>
+<span style="color: #BA2121; font-style: italic">    Inputs have dimension D, there are C classes, and we operate on minibatches</span>
+<span style="color: #BA2121; font-style: italic">    of N examples.</span>
+<span style="color: #BA2121; font-style: italic">  </span>
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - X: A numpy array of shape (N, D) containing a minibatch of data.</span>
+<span style="color: #BA2121; font-style: italic">    - y: A numpy array of shape (N,) containing training labels; y[i] = c means</span>
+<span style="color: #BA2121; font-style: italic">      that X[i] has label c, where 0 &lt;= c &lt; C.</span>
+<span style="color: #BA2121; font-style: italic">  </span>
+<span style="color: #BA2121; font-style: italic">    Returns a tuple of:</span>
+<span style="color: #BA2121; font-style: italic">    - loss as single float</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+  
+    <span style="color: #408080; font-style: italic"># compute the loss and the gradient</span>
+    num_classes <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>W<span style="color: #666666">.</span>shape[<span style="color: #666666">0</span>]
+    num_train <span style="color: #666666">=</span> X<span style="color: #666666">.</span>shape[<span style="color: #666666">0</span>]
+    loss <span style="color: #666666">=</span> <span style="color: #666666">0.0</span>
+
+    <span style="color: #008000; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> np<span style="color: #666666">.</span>arange(num_train):
+      L <span style="color: #666666">=</span> <span style="color: #666666">0</span>
+      <span style="color: #008000; font-weight: bold">for</span> j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">range</span>(num_classes):
+        zj <span style="color: #666666">=</span> <span style="color: #666666">0</span>
+        <span style="color: #008000; font-weight: bold">if</span> y[i] <span style="color: #666666">!=</span> j:
+          zj <span style="color: #666666">=</span> <span style="color: #666666">1</span> <span style="color: #666666">+</span> np<span style="color: #666666">.</span>dot(<span style="color: #008000">self</span><span style="color: #666666">.</span>W[j]<span style="color: #666666">.</span>T,X[i]) <span style="color: #666666">-</span> np<span style="color: #666666">.</span>dot(<span style="color: #008000">self</span><span style="color: #666666">.</span>W[y[i]]<span style="color: #666666">.</span>T, X[i])
+          L <span style="color: #666666">=</span> L <span style="color: #666666">+</span> <span style="color: #008000">max</span>(<span style="color: #666666">0</span>, zj)
+      loss <span style="color: #666666">=</span> loss <span style="color: #666666">+</span> L
+    loss <span style="color: #666666">=</span> loss <span style="color: #666666">/</span> num_train <span style="color: #408080; font-style: italic">#normalize</span>
+
+    
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    <span style="color: #008000; font-weight: bold">return</span> loss
+  
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">loss_and_grad</span>(<span style="color: #008000">self</span>, X, y):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">	Same as self.loss(X, y), except that it also returns the gradient.</span>
+
+<span style="color: #BA2121; font-style: italic">	Output: grad -- a matrix of the same dimensions as W containing </span>
+<span style="color: #BA2121; font-style: italic">		the gradient of the loss with respect to W.</span>
+<span style="color: #BA2121; font-style: italic">	&quot;&quot;&quot;</span>
+  
+    <span style="color: #408080; font-style: italic"># compute the loss and the gradient</span>
+    num_classes <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>W<span style="color: #666666">.</span>shape[<span style="color: #666666">0</span>]
+    num_train <span style="color: #666666">=</span> X<span style="color: #666666">.</span>shape[<span style="color: #666666">0</span>]
+    loss <span style="color: #666666">=</span> <span style="color: #666666">0.0</span>
+    grad <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros_like(<span style="color: #008000">self</span><span style="color: #666666">.</span>W)
+
+    <span style="color: #008000; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> np<span style="color: #666666">.</span>arange(num_train):
+      L <span style="color: #666666">=</span> <span style="color: #666666">0</span>
+      <span style="color: #008000; font-weight: bold">for</span> j <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">range</span>(num_classes):
+        zj <span style="color: #666666">=</span> <span style="color: #666666">0</span>
+        <span style="color: #008000; font-weight: bold">if</span> y[i] <span style="color: #666666">!=</span> j:
+          zj <span style="color: #666666">=</span> <span style="color: #666666">1</span> <span style="color: #666666">+</span> np<span style="color: #666666">.</span>dot(<span style="color: #008000">self</span><span style="color: #666666">.</span>W[j]<span style="color: #666666">.</span>T, X[i]) <span style="color: #666666">-</span> np<span style="color: #666666">.</span>dot(<span style="color: #008000">self</span><span style="color: #666666">.</span>W[y[i]]<span style="color: #666666">.</span>T, X[i])
+          L <span style="color: #666666">=</span> L <span style="color: #666666">+</span> <span style="color: #008000">max</span>(<span style="color: #666666">0</span>, zj)
+          <span style="color: #408080; font-style: italic">#Hinge</span>
+          grad[j,:] <span style="color: #666666">+=</span> X[i]<span style="color: #666666">.</span>T <span style="color: #666666">*</span> (zj <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>)
+          grad[y[i],:] <span style="color: #666666">-=</span> X[i]<span style="color: #666666">.</span>T <span style="color: #666666">*</span> (zj <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>)
+      loss <span style="color: #666666">=</span> loss <span style="color: #666666">+</span> L
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    loss <span style="color: #666666">/=</span> num_train
+    grad <span style="color: #666666">/=</span> num_train
+
+    <span style="color: #008000; font-weight: bold">return</span> loss, grad
+
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">grad_check_sparse</span>(<span style="color: #008000">self</span>, X, y, your_grad, num_checks<span style="color: #666666">=10</span>, h<span style="color: #666666">=1e-5</span>):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    sample a few random elements and only return numerical</span>
+<span style="color: #BA2121; font-style: italic">    in these dimensions.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+  
+    <span style="color: #008000; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> np<span style="color: #666666">.</span>arange(num_checks):
+      ix <span style="color: #666666">=</span> <span style="color: #008000">tuple</span>([np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>randint(m) <span style="color: #008000; font-weight: bold">for</span> m <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>W<span style="color: #666666">.</span>shape])
+
+      oldval <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>W[ix]
+      <span style="color: #008000">self</span><span style="color: #666666">.</span>W[ix] <span style="color: #666666">=</span> oldval <span style="color: #666666">+</span> h <span style="color: #408080; font-style: italic"># increment by h</span>
+      fxph <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>loss(X, y)
+      <span style="color: #008000">self</span><span style="color: #666666">.</span>W[ix] <span style="color: #666666">=</span> oldval <span style="color: #666666">-</span> h <span style="color: #408080; font-style: italic"># decrement by h</span>
+      fxmh <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>loss(X,y) <span style="color: #408080; font-style: italic"># evaluate f(x - h)</span>
+      <span style="color: #008000">self</span><span style="color: #666666">.</span>W[ix] <span style="color: #666666">=</span> oldval <span style="color: #408080; font-style: italic"># reset</span>
+  
+      grad_numerical <span style="color: #666666">=</span> (fxph <span style="color: #666666">-</span> fxmh) <span style="color: #666666">/</span> (<span style="color: #666666">2</span> <span style="color: #666666">*</span> h)
+      grad_analytic <span style="color: #666666">=</span> your_grad[ix]
+      rel_error <span style="color: #666666">=</span> <span style="color: #008000">abs</span>(grad_numerical <span style="color: #666666">-</span> grad_analytic) <span style="color: #666666">/</span> (<span style="color: #008000">abs</span>(grad_numerical) <span style="color: #666666">+</span> <span style="color: #008000">abs</span>(grad_analytic))
+      <span style="color: #008000; font-weight: bold">print</span>(<span style="color: #BA2121">&#39;numerical: </span><span style="color: #BB6688; font-weight: bold">%f</span><span style="color: #BA2121"> analytic: </span><span style="color: #BB6688; font-weight: bold">%f</span><span style="color: #BA2121">, relative error: </span><span style="color: #BB6688; font-weight: bold">%e</span><span style="color: #BA2121">&#39;</span> <span style="color: #666666">%</span> (grad_numerical, grad_analytic, rel_error))
+
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">fast_loss_and_grad</span>(<span style="color: #008000">self</span>, X, y):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    A vectorized implementation of loss_and_grad. It shares the same</span>
+<span style="color: #BA2121; font-style: italic">	inputs and ouptuts as loss_and_grad.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    loss <span style="color: #666666">=</span> <span style="color: #666666">0.0</span>
+    grad <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros(<span style="color: #008000">self</span><span style="color: #666666">.</span>W<span style="color: #666666">.</span>shape) <span style="color: #408080; font-style: italic"># initialize the gradient as zero</span>
+  
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+	<span style="color: #408080; font-style: italic">#   Calculate the SVM loss WITHOUT any for loops.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    num_classes <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>W<span style="color: #666666">.</span>shape[<span style="color: #666666">1</span>]
+    num_train <span style="color: #666666">=</span> X<span style="color: #666666">.</span>shape[<span style="color: #666666">0</span>]
+
+    aj <span style="color: #666666">=</span> np<span style="color: #666666">.</span>dot(X, <span style="color: #008000">self</span><span style="color: #666666">.</span>W<span style="color: #666666">.</span>T)
+    ayi <span style="color: #666666">=</span> np<span style="color: #666666">.</span>resize(aj[np<span style="color: #666666">.</span>arange(num_train), y], (num_train, <span style="color: #666666">1</span>))
+    Losses <span style="color: #666666">=</span> np<span style="color: #666666">.</span>maximum(<span style="color: #666666">0</span>, <span style="color: #666666">1</span> <span style="color: #666666">+</span> aj <span style="color: #666666">-</span> ayi)
+    loss <span style="color: #666666">=</span> (np<span style="color: #666666">.</span>sum(Losses) <span style="color: #666666">-</span> num_train)<span style="color: #666666">/</span>num_train
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+
+
+	<span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+	<span style="color: #408080; font-style: italic">#   Calculate the SVM grad WITHOUT any for loops.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    m <span style="color: #666666">=</span> np<span style="color: #666666">.</span>maximum(<span style="color: #666666">0</span>, X<span style="color: #666666">.</span>dot(<span style="color: #008000">self</span><span style="color: #666666">.</span>W<span style="color: #666666">.</span>T) <span style="color: #666666">-</span> X<span style="color: #666666">.</span>dot(<span style="color: #008000">self</span><span style="color: #666666">.</span>W<span style="color: #666666">.</span>T)[np<span style="color: #666666">.</span>arange(num_train), y]<span style="color: #666666">.</span>reshape(<span style="color: #666666">-1</span>, <span style="color: #666666">1</span>) <span style="color: #666666">+</span> <span style="color: #666666">1</span>)
+    m[np<span style="color: #666666">.</span>arange(num_train), y] <span style="color: #666666">=</span> <span style="color: #666666">0</span>
+    m[m <span style="color: #666666">&gt;</span> <span style="color: #666666">0</span>] <span style="color: #666666">=</span> <span style="color: #666666">1</span>
+    m[np<span style="color: #666666">.</span>arange(num_train), y] <span style="color: #666666">=</span> <span style="color: #666666">-</span>np<span style="color: #666666">.</span>sum(m, axis<span style="color: #666666">=1</span>)
+    grad <span style="color: #666666">=</span> ((X<span style="color: #666666">.</span>T<span style="color: #666666">.</span>dot(m))<span style="color: #666666">.</span>T) <span style="color: #666666">/</span> num_train
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    <span style="color: #008000; font-weight: bold">return</span> loss, grad
+
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">train</span>(<span style="color: #008000">self</span>, X, y, learning_rate<span style="color: #666666">=1e-3</span>, num_iters<span style="color: #666666">=100</span>,
+            batch_size<span style="color: #666666">=200</span>, verbose<span style="color: #666666">=</span><span style="color: #008000">False</span>):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Train this linear classifier using stochastic gradient descent.</span>
+
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - X: A numpy array of shape (N, D) containing training data; there are N</span>
+<span style="color: #BA2121; font-style: italic">      training samples each of dimension D.</span>
+<span style="color: #BA2121; font-style: italic">    - y: A numpy array of shape (N,) containing training labels; y[i] = c</span>
+<span style="color: #BA2121; font-style: italic">      means that X[i] has label 0 &lt;= c &lt; C for C classes.</span>
+<span style="color: #BA2121; font-style: italic">    - learning_rate: (float) learning rate for optimization.</span>
+<span style="color: #BA2121; font-style: italic">    - num_iters: (integer) number of steps to take when optimizing</span>
+<span style="color: #BA2121; font-style: italic">    - batch_size: (integer) number of training examples to use at each step.</span>
+<span style="color: #BA2121; font-style: italic">    - verbose: (boolean) If true, print progress during optimization.</span>
+
+<span style="color: #BA2121; font-style: italic">    Outputs:</span>
+<span style="color: #BA2121; font-style: italic">    A list containing the value of the loss function at each training iteration.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    num_train, dim <span style="color: #666666">=</span> X<span style="color: #666666">.</span>shape
+    num_classes <span style="color: #666666">=</span> np<span style="color: #666666">.</span>max(y) <span style="color: #666666">+</span> <span style="color: #666666">1</span> <span style="color: #408080; font-style: italic"># assume y takes values 0...K-1 where K is number of classes</span>
+
+    <span style="color: #008000">self</span><span style="color: #666666">.</span>init_weights(dims<span style="color: #666666">=</span>[np<span style="color: #666666">.</span>max(y) <span style="color: #666666">+</span> <span style="color: #666666">1</span>, X<span style="color: #666666">.</span>shape[<span style="color: #666666">1</span>]])	<span style="color: #408080; font-style: italic"># initializes the weights of self.W</span>
+
+    <span style="color: #408080; font-style: italic"># Run stochastic gradient descent to optimize W</span>
+    loss_history <span style="color: #666666">=</span> []
+
+    <span style="color: #008000; font-weight: bold">for</span> it <span style="color: #AA22FF; font-weight: bold">in</span> np<span style="color: #666666">.</span>arange(num_iters):
+      X_batch <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+      y_batch <span style="color: #666666">=</span> <span style="color: #008000">None</span>
+
+      <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+      <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+      <span style="color: #408080; font-style: italic">#   Sample batch_size elements from the training data for use in </span>
+      <span style="color: #408080; font-style: italic">#	  gradient descent.  After sampling,</span>
+      <span style="color: #408080; font-style: italic">#     - X_batch should have shape: (dim, batch_size)</span>
+	    <span style="color: #408080; font-style: italic">#     - y_batch should have shape: (batch_size,)</span>
+	    <span style="color: #408080; font-style: italic">#   The indices should be randomly generated to reduce correlations</span>
+	    <span style="color: #408080; font-style: italic">#   in the dataset.  Use np.random.choice.  It&#39;s okay to sample with</span>
+	    <span style="color: #408080; font-style: italic">#   replacement.</span>
+      <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+      a <span style="color: #666666">=</span> <span style="color: #008000">list</span>(<span style="color: #008000">range</span>(<span style="color: #008000">len</span>(X)))
+      indxs <span style="color: #666666">=</span> np<span style="color: #666666">.</span>random<span style="color: #666666">.</span>choice(a, size <span style="color: #666666">=</span> batch_size, replace<span style="color: #666666">=</span><span style="color: #008000">False</span>)
+      X_batch <span style="color: #666666">=</span> np<span style="color: #666666">.</span>vstack([X[i] <span style="color: #008000; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> indxs])
+      y_batch <span style="color: #666666">=</span> [y[i] <span style="color: #008000; font-weight: bold">for</span> i <span style="color: #AA22FF; font-weight: bold">in</span> indxs]
+      <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+      <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+      <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+      <span style="color: #408080; font-style: italic"># evaluate loss and gradient</span>
+      loss, grad <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>fast_loss_and_grad(X_batch, y_batch)
+      loss_history<span style="color: #666666">.</span>append(loss)
+
+      <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+      <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+      <span style="color: #408080; font-style: italic">#   Update the parameters, self.W, with a gradient step </span>
+      <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+      <span style="color: #008000">self</span><span style="color: #666666">.</span>W <span style="color: #666666">=</span> <span style="color: #008000">self</span><span style="color: #666666">.</span>W <span style="color: #666666">-</span> learning_rate<span style="color: #666666">*</span>grad
+	    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+      <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+      <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+      <span style="color: #008000; font-weight: bold">if</span> verbose <span style="color: #AA22FF; font-weight: bold">and</span> it <span style="color: #666666">%</span> <span style="color: #666666">100</span> <span style="color: #666666">==</span> <span style="color: #666666">0</span>:
+        <span style="color: #008000; font-weight: bold">print</span>(<span style="color: #BA2121">&#39;iteration {} / {}: loss {}&#39;</span><span style="color: #666666">.</span>format(it, num_iters, loss))
+
+    <span style="color: #008000; font-weight: bold">return</span> loss_history
+
+  <span style="color: #008000; font-weight: bold">def</span> <span style="color: #0000FF">predict</span>(<span style="color: #008000">self</span>, X):
+    <span style="color: #BA2121; font-style: italic">&quot;&quot;&quot;</span>
+<span style="color: #BA2121; font-style: italic">    Inputs:</span>
+<span style="color: #BA2121; font-style: italic">    - X: N x D array of training data. Each row is a D-dimensional point.</span>
+
+<span style="color: #BA2121; font-style: italic">    Returns:</span>
+<span style="color: #BA2121; font-style: italic">    - y_pred: Predicted labels for the data in X. y_pred is a 1-dimensional</span>
+<span style="color: #BA2121; font-style: italic">      array of length N, and each element is an integer giving the predicted</span>
+<span style="color: #BA2121; font-style: italic">      class.</span>
+<span style="color: #BA2121; font-style: italic">    &quot;&quot;&quot;</span>
+    y_pred <span style="color: #666666">=</span> np<span style="color: #666666">.</span>zeros(X<span style="color: #666666">.</span>shape[<span style="color: #666666">1</span>])
+
+
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># YOUR CODE HERE:</span>
+    <span style="color: #408080; font-style: italic">#   Predict the labels given the training data with the parameter self.W.</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    y_pred <span style="color: #666666">=</span> np<span style="color: #666666">.</span>argmax(np<span style="color: #666666">.</span>dot(X,<span style="color: #008000">self</span><span style="color: #666666">.</span>W<span style="color: #666666">.</span>T),axis<span style="color: #666666">=1</span>)
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+    <span style="color: #408080; font-style: italic"># END YOUR CODE HERE</span>
+    <span style="color: #408080; font-style: italic"># ================================================================ #</span>
+
+    <span style="color: #008000; font-weight: bold">return</span> y_pred
+</pre></div>
+</body>
+</html>
